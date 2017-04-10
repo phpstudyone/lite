@@ -48,4 +48,17 @@ class Object{
         $this->get = $this->request->get();
         $this->config = Config::getConfig();
     }
+
+    /**
+     * 公共的记录日志方法，日志存储方式由配置文件决定
+     * @param $fileName
+     * @param string $content
+     * @param array $array
+     * @return mixed
+     */
+    public function log($fileName, $content = '', $array = []){
+        $logConfig = Config::getConfig('log');
+        $logObj = "\\core\\log\\Log" . $logConfig['type'];
+        return (new $logObj)->log($fileName, $content, $array);
+    }
 }
