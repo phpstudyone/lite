@@ -1,18 +1,16 @@
 <?php
 /**
- * 以文件的方式存储日志
+ * 将日志文件存储在mysql中
  * Created by PhpStorm.
  * User: Winds10
  * Date: 2017/4/10
- * Time: 22:21
+ * Time: 23:10
  */
 namespace core\log;
-use core\Object;
 
-class LogFile implements Log{
+class LogMysql implements Log{
     public function log($fileName, $content = '', $array = []){
-        dump($fileName, $content, $array,'file');die;
+        dump($fileName, $content, $array,'mysql');die;
         // TODO: Implement log() method.
-
     }
 }
