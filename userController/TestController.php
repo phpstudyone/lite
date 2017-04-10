@@ -21,6 +21,12 @@ class TestController extends BaseController  {
         dump($this);
     }
 
+    public function IndexAction()
+    {
+        $this->log('111','222',[1,2,3]);die;
+        dump(1111);die;
+    }
+
     public function SendAction(){
 //        $url = "http://api.51yund.com/sport/get_phone_registerd";
         $url = "http://api.51yund.com/sport/send_phone_verify_code";
