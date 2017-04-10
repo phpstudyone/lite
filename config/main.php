@@ -10,5 +10,13 @@ return $config = [
     'default_router' => [
         'controller' => 'test',
         'action' => 'test'
+    ],
+    /**
+     * 日志配置
+     * type => ['File'=>[ 'path' => 'log/runtime'],'Mysql']
+     */
+    'log' => [
+        'type' =>'File',
+        'path' => 'log/runtime',
     ]
 ];
