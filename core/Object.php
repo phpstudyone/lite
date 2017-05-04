@@ -7,6 +7,8 @@
  */
 namespace core;
 
+use core\AR\AR;
+
 class Object{
 
     /**
@@ -14,6 +16,12 @@ class Object{
      * @var object
      */
     public $config;
+
+    /**
+     * ar组件
+     * @var object
+     */
+    public $ar;
 
     /**
      * 命名空间
@@ -43,10 +51,8 @@ class Object{
         $this->namespace = $class->getNamespaceName();
         $this->className = $class->getName();
         $this->shortName = $class->getShortName();
-        $this->request = new Request();
-        $this->post = $this->request->post();
-        $this->get = $this->request->get();
         $this->config = Config::getConfig();
+        $this->ar = new AR();
     }
 
     /**
