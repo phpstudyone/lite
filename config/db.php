@@ -6,8 +6,8 @@
  * Time: 18:01
  */
 return [
-    'dsn'=>'',
-    'database' =>'',
-    'username' => '',
+    'dsn'=>'mysql:host=127.0.0.1;dbname=pachong',
+//    'database' =>'',
+    'username' => 'root',
     'password' => '',
 ];
