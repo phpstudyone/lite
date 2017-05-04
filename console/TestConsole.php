@@ -34,4 +34,12 @@ class TestConsole extends Console  {
         $str = str_replace('HelloController',$controllerName,$str);
         file_put_contents($path,$str);
     }
+
+    public function UpdateCoreAction(){
+        $path = '/Applications/XAMPP/htdocs/tbl/app/config/core.php';
+        $conten = file_get_contents($path);
+        $conten = str_replace("Configure::write('Session.save','cake');","Configure::write('Session.save','cache');",$conten);  
+        $conten = str_replace("Cache::config('default', array('engine' => 'File'));","Cache::config('default', array('engine' => 'Memcache','servers'=>array('127.0.0.1:11211')));",$conten);
+        file_put_contents($path, $conten);
+    }
 }

@@ -6,6 +6,7 @@
  * Time: 下午10:04
  */
 namespace userController;
+use core\AR\AR;
 use base\BaseController;
 
 class TestController extends BaseController  {
@@ -15,10 +16,15 @@ class TestController extends BaseController  {
      * @param string $param2
      */
     public function TestAction(){
-        $send = $this->sendEmail('aaaaa','cccc','517690962@qq.com');
-        dump($send);die;
-        dump($this->request->get());
-        dump($this);
+        $sql = "select id,video_id,title from collect_data_copy limit 10";
+        $a = $this->ar->queryBySql($sql);
+        dump($a);die;
+    }
+
+    public function IndexAction()
+    {
+        $this->log('111','222',[1,2,3]);die;
+        dump(1111);die;
     }
 
     public function SendAction(){
