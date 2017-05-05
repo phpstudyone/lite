@@ -6,7 +6,6 @@
  * Time: 下午10:04
  */
 namespace userController;
-use core\AR\AR;
 use base\BaseController;
 
 class TestController extends BaseController  {
@@ -17,8 +16,10 @@ class TestController extends BaseController  {
      */
     public function TestAction(){
         $sql = "select id,video_id,title from collect_data_copy limit 10";
-        $a = $this->ar->queryBySql($sql);
-        dump($a);die;
+        $a = $this->db->queryBySql($sql);
+        $sql = "select id,video_id,title from collect_data_copy order by id desc limit 20";
+        $b = $this->db->queryBySql($sql);
+        dump($this->db->getLastQuerySql(),$this->db->getQuerySql(false,true));die;
     }
 
     public function IndexAction()
