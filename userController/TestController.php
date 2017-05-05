@@ -15,6 +15,7 @@ class TestController extends BaseController  {
      * @param string $param2
      */
     public function TestAction(){
+        $this->db->select()->from()->addWhere()->queryAll();
         $sql = "select id,video_id,title from collect_data_copy limit 10";
         $a = $this->db->queryBySql($sql);
         $sql = "select id,video_id,title from collect_data_copy order by id desc limit 20";

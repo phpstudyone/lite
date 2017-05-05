@@ -8,7 +8,7 @@ use core\Config;
  * Date: 2017/5/4
  * Time: 23:20
  */
-class AR extends \PDO {
+abstract class AR extends \PDO {
     private $_dsn;
     private $_username;
     private $_password;
@@ -35,8 +35,6 @@ class AR extends \PDO {
         }
     }
 
-
-
     /**
      * 直接执行sql返回查询结果(私有，框架内部代码调用)
      *
@@ -47,5 +45,68 @@ class AR extends \PDO {
         $result = $this->query($sql,self::FETCH_ASSOC)->fetchAll();
         self::$_sqlArr[] = ['sql'=>$sql,'result'=>$result];
         return $result;
+    }
+
+    /**
+     * 查询的字段
+     * @var string
+     */
+    protected $select;
+
+    /**
+     * 定义查询字段的抽象方法规范
+     * @param array $field 要查询的字段，可以为数组或字符串
+     * @return mixed
+     */
+    abstract public function select($field = []);
+
+    /**
+     * 查询的数据表名
+     * @var string
+     */
+    protected $tableName;
+
+    /**
+     * 定义查询的数据表抽象方法规范
+     * @param string $tableName
+     * @return mixed
+     */
+    abstract public function from($tableName = '');
+
+    /**
+     * 查询条件
+     * @var string
+     */
+    protected $where;
+
+    /**
+     * 定义查询条件的抽象方法规范
+     * @param array $condition
+     * @return mixed
+     */
+    abstract public function where($condition = []);
+
+    /**
+     * 追加的查询条件，可以为数组或字符串
+     * @var mixed
+     */
+    protected $addWhere;
+
+    /**
+     * 定义追加的查询条件的抽象方法规范
+     * @param array $condition
+     * @return mixed
+     */
+    abstract public function addWhere($condition = []);
+
+    abstract public function orderBy($orderBy = []);
+
+    abstract public function groupBy($groupBy = []);
+
+    abstract public function having($condition = []);
+
+    public function queryAll()
+    {
+        dump($this);die;
     }
 }
