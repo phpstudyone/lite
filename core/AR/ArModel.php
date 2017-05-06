@@ -50,4 +50,15 @@ class ArModel extends AR {
         // TODO: Implement having() method.
         return $this;
     }
+
+    /**
+     * @param $offset
+     * @param $rows
+     * @return $this
+     */
+    public function limit($offset = null, $rows = null)
+    {
+        // TODO: Implement limit() method.
+        return $this;
+    }
 }

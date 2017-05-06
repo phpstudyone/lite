@@ -14,6 +14,8 @@ abstract class AR extends \PDO {
     private $_password;
     private $_connect;
 
+    public $errCode;
+
     /**
      * 存放执行的sql和结果，用于调试
      *
@@ -69,7 +71,7 @@ abstract class AR extends \PDO {
     /**
      * 定义查询的数据表抽象方法规范
      * @param string $tableName
-     * @return mixed
+     * @return $this
      */
     abstract public function from($tableName = '');
 
@@ -82,31 +84,48 @@ abstract class AR extends \PDO {
     /**
      * 定义查询条件的抽象方法规范
      * @param array $condition
-     * @return mixed
+     * @return $this
      */
     abstract public function where($condition = []);
 
     /**
      * 追加的查询条件，可以为数组或字符串
-     * @var mixed
+     * @var $this
      */
     protected $addWhere;
 
     /**
      * 定义追加的查询条件的抽象方法规范
      * @param array $condition
-     * @return mixed
+     * @return $this
      */
     abstract public function addWhere($condition = []);
 
+    /**
+     * @param array $orderBy
+     * @return $this
+     */
     abstract public function orderBy($orderBy = []);
 
+    /**
+     * @param array $groupBy
+     * @return $this
+     */
     abstract public function groupBy($groupBy = []);
 
+    /**
+     * @param array $condition
+     * @return $this
+     */
     abstract public function having($condition = []);
 
-    public function queryAll()
-    {
-        dump($this);die;
-    }
+    protected $limit;
+
+    /**
+     * @param $offset
+     * @param $rows
+     * @return $this
+     */
+    abstract public function limit($offset=null,$rows=null);
+
 }
