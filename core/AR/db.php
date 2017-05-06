@@ -153,10 +153,24 @@ class db extends AR {
         return $this;
     }
 
+    /**
+     * 返回查询的数组
+     * @return array
+     */
     public function all()
     {
-        return $this;
-//        $sql = '';
-//        return $this->_execQuery($sql);
+        $sql = 'select ';
+        if($this->select)
+            $sql .= $this->select;
+
+        if($this->where){
+
+        }
+
+        if($this->tableName)
+            $sql .= ' from ' . $this->tableName;
+        if($this->limit)
+            $sql .= ' limit ' . $this->limit;
+        return $this->_execQuery($sql);
     }
 }
