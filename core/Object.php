@@ -6,8 +6,7 @@
  * Time: 18:36
  */
 namespace core;
-
-use core\AR\AR;
+use core\AR\db;
 
 class Object{
 
@@ -18,10 +17,10 @@ class Object{
     public $config;
 
     /**
-     * ar组件
+     * db组件
      * @var object
      */
-    public $ar;
+    public $db;
 
     /**
      * 命名空间
@@ -52,7 +51,7 @@ class Object{
         $this->className = $class->getName();
         $this->shortName = $class->getShortName();
         $this->config = Config::getConfig();
-        $this->ar = new AR();
+        $this->db = new db();
     }
 
     /**

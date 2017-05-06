@@ -8,18 +8,20 @@ use core\Config;
  * Date: 2017/5/4
  * Time: 23:20
  */
-class AR extends \PDO {
+abstract class AR extends \PDO {
     private $_dsn;
     private $_username;
     private $_password;
     private $_connect;
+
+    public $errCode;
 
     /**
      * 存放执行的sql和结果，用于调试
      *
      * @var array
      */
-    private static $_sqlArr;
+    protected static $_sqlArr;
 
     public function __construct()
     {
@@ -36,57 +38,94 @@ class AR extends \PDO {
     }
 
     /**
-     * 直接执行sql返回查询结果
-     * @param $sql
-     * @return array
-     */
-    public function queryBySql($sql){
-        return $this->_execQuery($sql);
-    }
-
-    /**
      * 直接执行sql返回查询结果(私有，框架内部代码调用)
      *
      * @param [type] $sql
-     * @return void
+     * @return array
      */
-    private function _execQuery($sql){
+    protected function _execQuery($sql){
         $result = $this->query($sql,self::FETCH_ASSOC)->fetchAll();
         self::$_sqlArr[] = ['sql'=>$sql,'result'=>$result];
         return $result;
     }
 
     /**
-     * 返回最后一次执行的查询sql
-     *
-     * @return void
+     * 查询的字段
+     * @var string
      */
-    public function getLastQuerySql(){
-        $endArr = end(self::$_sqlArr);
-        return isset($endArr['sql']) ? $endArr['sql'] : '';
-    }
+    protected $select;
 
     /**
-     * 获取执行的sql
-     *
-     * @param boolean $is_end 是否只返回最后一次查询的sql
-     * @param boolean $is_result 是否需要返回查询的结果
-     * @return void
+     * 定义查询字段的抽象方法规范
+     * @param array $field 要查询的字段，可以为数组或字符串
+     * @return mixed
      */
-    public function getQuerySql($is_end = false,$is_result = false){
-        if ($is_end){
-            $endArr = end(self::$_sqlArr);
-            if($is_result){
-                return $endArr;
-            }else{
-                return isset($endArr['sql']) ? $endArr['sql'] : '';
-            }
-        }else{
-            if($is_result){
-                return self::$_sqlArr;
-            }else{
-                return array_map('reset',self::$_sqlArr);
-            }
-        }
-    }
+    abstract public function select($field = []);
+
+    /**
+     * 查询的数据表名
+     * @var string
+     */
+    protected $tableName;
+
+    /**
+     * 定义查询的数据表抽象方法规范
+     * @param string $tableName
+     * @return $this
+     */
+    abstract public function from($tableName = '');
+
+    /**
+     * 查询条件
+     * @var string
+     */
+    protected $where;
+
+    /**
+     * 定义查询条件的抽象方法规范
+     * @param array $condition
+     * @return $this
+     */
+    abstract public function where($condition = []);
+
+    /**
+     * 追加的查询条件，可以为数组或字符串
+     * @var $this
+     */
+    protected $addWhere;
+
+    /**
+     * 定义追加的查询条件的抽象方法规范
+     * @param array $condition
+     * @return $this
+     */
+    abstract public function addWhere($condition = []);
+
+    /**
+     * @param array $orderBy
+     * @return $this
+     */
+    abstract public function orderBy($orderBy = []);
+
+    /**
+     * @param array $groupBy
+     * @return $this
+     */
+    abstract public function groupBy($groupBy = []);
+
+    /**
+     * @param array $condition
+     * @return $this
+     */
+    abstract public function having($condition = []);
+
+    protected $limit;
+
+    /**
+     * @param $offset
+     * @param $rows
+     * @return $this
+     */
+    abstract public function limit($offset=null,$rows=null);
+
 }
