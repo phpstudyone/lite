@@ -11,6 +11,6 @@
  * 定义项目根目录
  */
 define('BASE_PATH',str_replace('\\','/',realpath(dirname(__FILE__).'/'))."/")
-require_once "core/Application.php";
+require_once "core/Application.ph
 defined('DEBUG') or define('DEBUG',true);
  \core\Application::run()->webApp();
