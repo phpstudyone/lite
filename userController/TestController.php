@@ -7,6 +7,7 @@
  */
 namespace userController;
 use base\BaseController;
+use userModel\Users;
 
 class TestController extends BaseController  {
     /**
@@ -16,17 +17,26 @@ class TestController extends BaseController  {
      */
     public function TestAction(){
 
-        $a = $this->db
-            ->select(['video_id','title' , 'learnName'=>'learn_name'])
-            ->from('collect_data_copy')
-            ->limit(60,10)
-            ->all();
-        dump($a,$this->db->getLastQuerySql());die;
-        $sql = "select id,video_id,title from collect_data_copy limit 10";
-        $a = $this->db->queryBySql($sql);
-        $sql = "select id,video_id,title from collect_data_copy order by id desc limit 20";
-        $b = $this->db->queryBySql($sql);
-        dump($this->db->getLastQuerySql(),$this->db->getQuerySql(false,true));die;
+        $userModel = new Users();
+        $userModel->username = '2222';
+        $userModel->create_time = time();
+        $userModel->openid = '1111';
+        $userModel->last_login_latitude = '23.3232';
+        $userModel->last_login_longitude = '117.356';
+        $userModel->last_login_time = time();
+        dump($userModel->save(),$userModel->lastInsertId,$userModel);die;
+
+//        $a = $this->db
+//            ->select(['video_id','title' , 'learnName'=>'learn_name'])
+//            ->from('collect_data_copy')
+//            ->limit(60,10)
+//            ->all();
+//        dump($a,$this->db->getLastQuerySql());die;
+//        $sql = "select id,video_id,title from collect_data_copy limit 10";
+//        $a = $this->db->queryBySql($sql);
+//        $sql = "select id,video_id,title from collect_data_copy order by id desc limit 20";
+//        $b = $this->db->queryBySql($sql);
+//        dump($this->db->getLastQuerySql(),$this->db->getQuerySql(false,true));die;
     }
 
     public function IndexAction()

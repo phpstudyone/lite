@@ -14,7 +14,37 @@ abstract class AR extends \PDO {
     private $_password;
     private $_connect;
 
+    public $lastInsertId;
     public $errCode;
+
+    public $_tablePrefix;
+
+    //sql执行类型 create
+    const CURD_MODEL_C = 1;
+    //sql执行类型 update
+    const CURD_MODEL_U = 2;
+    //sql执行类型 query
+    const CURD_MODEL_R = 3;
+    //sql执行类型 delete
+    const CURD_MODEL_D = 4;
+
+    /**
+     * 命名空间
+     * @var string
+     */
+    public $namespace;
+
+    /**
+     * 类名(完整类名)
+     * @var string
+     */
+    public $className;
+
+    /**
+     * 类名(去掉命名空间的类名)
+     * @var string
+     */
+    public $shortName;
 
     /**
      * 存放执行的sql和结果，用于调试
@@ -23,8 +53,17 @@ abstract class AR extends \PDO {
      */
     protected static $_sqlArr;
 
+    /**
+     * AR constructor.构造方法，设置类名、获取数据库链接
+     */
     public function __construct()
     {
+        $class = get_called_class();
+        $class = new \ReflectionClass($class);
+        $this->namespace = $class->getNamespaceName();
+        $this->className = $class->getName();
+        $this->shortName = $class->getShortName();
+
         if($this->_connect){
             return $this->_connect;
         }else{
@@ -47,6 +86,28 @@ abstract class AR extends \PDO {
         $result = $this->query($sql,self::FETCH_ASSOC)->fetchAll();
         self::$_sqlArr[] = ['sql'=>$sql,'result'=>$result];
         return $result;
+    }
+
+    /**
+     * 执行insert update delete sql的方法
+     * @param $sql
+     * @return bool
+     */
+    protected function _exec($sql,$model = self::CURD_MODEL_C){
+        $result = $this->exec($sql);
+        self::$_sqlArr[] = ['sql'=>$sql,'result'=>$result];
+        if( $model === self::CURD_MODEL_C ){
+            $this->lastInsertId = $this->getLastInsertId();
+        }
+        return !empty($result);
+    }
+
+    /**
+     * 获取最后一次插入的id
+     * @return string
+     */
+    public function getLastInsertId(){
+        return $this->lastInsertId();
     }
 
     /**
