@@ -33,16 +33,26 @@ class ArModel extends AR {
         return parent::__construct();
     }
 
+    /**
+     * @return string
+     */
     public static function tableName(){
         return '';
     }
 
+    /**
+     * @return array
+     */
     public function attributeLabels()
     {
         return [
         ];
     }
 
+    /**
+     * @param array $condition
+     * @return array|bool|mixed
+     */
     public static function find($condition = []){
         $that = new static();
         $that->select();
@@ -52,6 +62,7 @@ class ArModel extends AR {
             $models = [];
             foreach ($result as $value){
                 $model = new static();
+                $model->isNewRecord = false;
                 foreach ($value as $k => $v){
                     $model->$k = $v;
                 }
@@ -107,7 +118,7 @@ class ArModel extends AR {
             }
         }
         $sql = trim($sql,',');
-         if($this->_exec($sql)){
+        if($this->_exec($sql,static::CURD_MODEL_C)){
              $this->id = $this->lastInsertId;
             return true;
         }else{
@@ -119,7 +130,15 @@ class ArModel extends AR {
      * @return bool
      */
     private function _update(){
-        return true;
+        $sql = 'update ' . $this->tableName . ' set ';
+        foreach ($this->attributeLabels as $key => $value){
+            if($this->$key){
+                $sql .= '`' . $key . '` = "' . $this->$key . '" ,';
+            }
+        }
+        $sql = trim($sql,',');
+        $sql .= ' where id = ' . $this->id;
+        return $this->_exec($sql,static::CURD_MODEL_U);
     }
 
     /**
