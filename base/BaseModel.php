@@ -1,6 +1,6 @@
 <?php
 namespace base;
-use core\Model;
+use core\AR\ArModel;
 
 /**
  * 模型类父类
@@ -9,7 +9,7 @@ use core\Model;
  * Date: 2017/2/17
  * Time: 17:42
  */
-class BaseModel extends Model  {
+class BaseModel extends ArModel  {
     public $tableName;
     public $pdo;
     public function aaa(){

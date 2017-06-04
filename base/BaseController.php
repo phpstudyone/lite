@@ -1,6 +1,5 @@
 <?php
 namespace base;
-use comment\smtp;
 use core\Controller;
 
 /**
