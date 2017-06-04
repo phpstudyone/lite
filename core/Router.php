@@ -44,11 +44,13 @@ class Router{
             }
         }
         $request = new Request();
-        $controller = ucfirst(strtolower($request->get('controller')));
+        $controller = ucfirst($request->get('controller'));
         $controllerName = $controller . "Controller";
         $object = '\\userController\\' . $controllerName;
         $object = new $object;
-        $action = ucfirst(strtolower($request->get('action'))) . "Action";
+        $action = ucfirst($request->get('action')) . "Action";
+        $object->action = lcfirst($request->get('action'));
+        $object->controller = lcfirst($request->get('controller'));
         $object->$action();
     }
 }

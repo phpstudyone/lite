@@ -7,6 +7,17 @@ namespace core;
  * Time: 下午4:21
  */
 class Controller extends Object {
+
+    /**
+     * @var string controller 名首字母小写
+     */
+    public $controller;
+
+    /**
+     * @var string action 名首字母小写
+     */
+    public $action;
+
     /**
      * 获取请求组件
      * @var object
@@ -31,5 +42,19 @@ class Controller extends Object {
         $this->request = new Request();
         $this->post = $this->request->post();
         $this->get = $this->request->get();
+    }
+
+    /**
+     * 视图渲染方法
+     * @param string $file
+     * @param string $value
+     */
+    public function render($file = '',$value = '')
+    {
+        if(empty($file)) {
+            $file = $this->action;
+        }
+        extract($value);
+        require_once (USER_VIEWS_PATH . $this->controller . DS . $file . '.php');
     }
 }

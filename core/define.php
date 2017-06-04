@@ -27,6 +27,11 @@ define('USER_CONTROLLER_PATH' , BASE_PATH . 'userController' . DS);
 define('USER_MODEL_PATH' , BASE_PATH . 'userModel' . DS);
 
 /**
+ * 定义用户视图路径
+ */
+define('USER_VIEWS_PATH', BASE_PATH . 'views' . DS);
+
+/**
  * 定义框架路径
  */
 define('CORE_PATH' , BASE_PATH . 'core' . DS);
