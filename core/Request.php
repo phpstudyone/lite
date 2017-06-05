@@ -31,6 +31,7 @@ class Request{
      * 编码方式 默认addslashes编码，如果不想被转码，请传递 null
      * (如果值为base64，是base64解码)
      * @param boolean $isClear true的时候重新获取
+     * @return array|mixed
      */
     public function post($name = '',$decode = 'addslashes',$isClear = false){
         if(!self::$get || $isClear){
@@ -46,6 +47,7 @@ class Request{
      * 编码方式 默认addslashes编码，如果不想被转码，请传递 null
      * (如果值为base64，是base64解码)
      * @param boolean $isClear true的时候重新获取
+     * @return array|mixed
      */
     public function get($name = '' , $decode = 'addslashes' ,$isClear = false){
         if(!self::$get || $isClear){
@@ -58,6 +60,7 @@ class Request{
      * 递归调用返回被转码之后的数
      * @param mixed $array 要转码的数
      * @param string $decode
+     * @return array|mixed
      */
     private function __decode($array,$decode,&$result){
         if(is_array($array)){

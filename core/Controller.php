@@ -9,6 +9,12 @@ namespace core;
 class Controller extends Object {
 
     /**
+     * 控制器layout
+     * @var string
+     */
+    public $layout = 'default';
+
+    /**
      * @var string controller 名首字母小写
      */
     public $controller;
@@ -54,7 +60,7 @@ class Controller extends Object {
         if(empty($file)) {
             $file = $this->action;
         }
-        extract($value);
-        require_once (USER_VIEWS_PATH . $this->controller . DS . $file . '.php');
+        $path = USER_VIEWS_PATH . $this->controller . DS . $file . '.php';
+        return Render::display($this->layout,$path,$value);
     }
 }
